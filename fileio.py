@@ -15,9 +15,10 @@
 import os
 import csv
 
-def get_filename(folder_path):
+def get_filename(folder_path:str) -> list:
     """
     获取文件夹下面所有文件，并返回文件夹里面所有文件名列表（包含子文件夹里面的文件）
+
     :param folder_path: 文件夹路径
     :type  folder_path: str
 
@@ -30,9 +31,10 @@ def get_filename(folder_path):
             filename_list.append(os.path.join(root, file))
     return filename_list
 
-def get_design_filename(folder_path,filetype):
+def get_design_filename(folder_path:str,filetype:str) -> list:
     """
     获取文件夹下面所有文件，并返回文件夹里面指定类型的文件名列表（包含子文件夹里面的文件）
+
     :param folder_path: 文件夹路径
     :type  folder_path: str
 
@@ -49,9 +51,10 @@ def get_design_filename(folder_path,filetype):
                 filename_list.append(os.path.join(root, file))
     return filename_list
 
-def get_singlefolder_filename(folder_path,filetype):
+def get_singlefolder_filename(folder_path:str,filetype:str) -> list:
     """
     获取待处理文件夹里指定后缀的文件名（单个文件夹，不包括子文件夹的文件）
+
     :param folder_path: 文件夹路径
     :type  folder_path: str
 
@@ -69,19 +72,55 @@ def get_singlefolder_filename(folder_path,filetype):
             filename_list.append(folder_path+file)
     return filename_list
 
-def record_csv(content_list,csv_filename):
+def get_xlsx_full_filename(folder_path:str) -> list:
+    """
+    获取待处理文件夹里所有后缀为.xlsx的全文件名
+
+    :param folder_path : 文件夹路径
+    :type folder_path : str
+
+    :return 文件夹里所有后缀为.xlsx的全文件名列表
+    :rtype list
+    """
+    filename_list = os.listdir(folder_path)
+    xlsx_list = []
+    for filename in filename_list:
+        # os.path.splitext():分离文件名与扩展名
+        if os.path.splitext(filename)[1] == '.xlsx':
+            xlsx_list.append(folder_path+filename)
+    return xlsx_list
+
+def get_xlsx_filename(folder_path:str) -> list:
+    """
+    获取待处理文件夹里所有后缀为.xlsx的全文件名
+
+    :param folder_path : 文件夹路径
+    :type folder_path : str
+
+    :return 文件夹里所有后缀为.xlsx的文件名列表
+    :rtype list
+    """
+    filename_list = os.listdir(folder_path)
+    xlsx_list = []
+    for filename in filename_list:
+        # os.path.splitext():分离文件名与扩展名
+        if os.path.splitext(filename)[1] == '.xlsx':
+            xlsx_list.append(filename)
+    return xlsx_list
+
+
+def record_csv(content_list:list,csv_filename:str) -> None:
     """
     将content_list列表的内容按行追加写入csv文件中
     csv文件编码：utf-8
 
     :param content_list: 要写入的内容
-    :type  list
+    :type  content_list: list
 
     :param csv_filename: 要写入的csv文件名
-    :type  str
+    :type  csv_filename: str
 
     :return: None
-    :rtype: None
     """
     # 创建文件对象
     with open(csv_filename,'a',newline='',encoding='utf-8') as csvfile:
@@ -90,7 +129,7 @@ def record_csv(content_list,csv_filename):
         # 写入文件
         csv_writer.writerow(content_list)
 
-def record_txt(content,txt_filename):
+def record_txt(content:str,txt_filename:str) -> None :
     """
     将content字符串内容按行追加写入txt文件中
     txt文件编码：utf-8
