@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# @Time : 2020/2/11 14:54
-# @Author : karinlee
-# @FileName : my_excel.py
+# @Time : 2020/10/6 14:16
+# @Author : 李加林
+# @FileName : workbookfunction.py
 # @Software : PyCharm
 # @Blog : https://blog.csdn.net/weixin_43972976
+# @github : https://github.com/karinlee1988/
+# @gitee : https://gitee.com/karinlee/
 
 """
 本模块包含相关自建函数，用于处理excel表格。
