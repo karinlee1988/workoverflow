@@ -56,6 +56,17 @@ def get_singlefolder_fullfilename(folder_path:str,filetype:list) -> list:
             filename_list.append(folder_path+file)
     return filename_list
 
+def get_normal_filename(fullfilename:str) -> str:
+    """
+    从全文件名（包含绝对路径的文件名）转换为普通文件名
+    如： "K:/Project/FilterDriver/DriverCodes/hello.txt" 通过转换变成"hello.txt"
+
+    :param fullfilename: 要写入的内容
+    :type  fullfilename: list
+
+    """
+    return os.path.basename(fullfilename)
+
 def record_csv(content_list:list,csv_filename:str) -> None:
     """
     将content_list列表的内容按行追加写入csv文件中
