@@ -9,24 +9,23 @@
 # @gitee : https://gitee.com/karinlee/
 
 """
-本模块包含相关自建函数，用于处理excel表格。
+本模块包含相关自建函数，用于处理openpyxl.Workbook对象。
 """
 
-import os
 import openpyxl
 from openpyxl.utils import get_column_letter, column_index_from_string
 
-def vlookup(
+def openpyxl_vlookup(
         wb_template,
-        ws_template_index,
-        template_key,
-        template_value,
+        ws_template_index:int,
+        template_key:str,
+        template_value:str,
         wb_source,
-        ws_source_index,
-        source_key,
-        source_value,
-        line
-        ):
+        ws_source_index:int,
+        source_key:str,
+        source_value:str,
+        line:int
+        ) -> None:
     """
     对2个不同的工作薄执行vlookup操作
 
@@ -46,11 +45,11 @@ def vlookup(
         'line' :从第几行开始vlookup
 
     :type:
-        'wb_template': class workbook
+        'wb_template': class Workbook
         'ws_template_index': int
         'template_key': str
         'template_value': str
-        'wb_source': class workbook
+        'wb_source': class Workbook
         'ws_source_index': int
         'source_key':  str
         'source_value': str
@@ -80,6 +79,7 @@ def vlookup(
     template_value_index = column_index_from_string(template_value)
     # 从第line行开始进行vlookup  可根据表头行数进行修改
     for row in range(int(line),ws_template.max_row+1):
+
         # try:
         #     ws_template.cell(row=row,column=template_value_index).value = dic[
         #     ws_template.cell(row=row,column=template_key_index).value]
@@ -91,43 +91,7 @@ def vlookup(
         ws_template.cell(row=row, column=template_value_index).value = dic.get(
             ws_template.cell(row=row, column=template_key_index).value)
 
-def get_xlsx_full_filename(folder_path):
-    """
-    获取待处理文件夹里所有后缀为.xlsx的全文件名
-
-    :param folder_path : 文件夹路径
-    :type folder_path : str
-
-    :return 文件夹里所有后缀为.xlsx的全文件名列表
-    :rtype list
-    """
-    filename_list = os.listdir(folder_path)
-    xlsx_list = []
-    for filename in filename_list:
-        # os.path.splitext():分离文件名与扩展名
-        if os.path.splitext(filename)[1] == '.xlsx':
-            xlsx_list.append(folder_path+filename)
-    return xlsx_list
-
-def get_xlsx_filename(folder_path):
-    """
-    获取待处理文件夹里所有后缀为.xlsx的全文件名
-
-    :param folder_path : 文件夹路径
-    :type folder_path : str
-
-    :return 文件夹里所有后缀为.xlsx的文件名列表
-    :rtype list
-    """
-    filename_list = os.listdir(folder_path)
-    xlsx_list = []
-    for filename in filename_list:
-        # os.path.splitext():分离文件名与扩展名
-        if os.path.splitext(filename)[1] == '.xlsx':
-            xlsx_list.append(filename)
-    return xlsx_list
-
-def worksheet_save_as(path,workbook):
+def worksheet_save_as(path:str,workbook) -> None:
     """
     将一个工作薄里面的多个工作表分别另存为独立的工作薄，独立的工作薄名称为原工作薄各工作表表名
 
@@ -135,7 +99,7 @@ def worksheet_save_as(path,workbook):
     :type path : str
 
     :param workbook:需要进行工作表另存为的workbook对象
-    :type workbook: class workbook
+    :type workbook: class Workbook
 
     :return: None
 
