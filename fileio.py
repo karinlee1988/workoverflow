@@ -15,17 +15,15 @@
 import os
 import csv
 
-
-def get_allfolder_fullfilename(folder_path:str,filetype:str="ALL") -> list:
+def get_allfolder_fullfilename(folder_path:str,filetype:list) -> list:
     """
     获取待处理文件夹下面所有文件，并返回文件夹里面指定类型的文件名列表（包含子文件夹里面的文件）
-    默认为获取所有文件，如果指定了filetype的类型时获取指定文件。
 
     :param folder_path: 文件夹路径
     :type  folder_path: str
 
-    :param filetype: 指定类型文件的后缀（如.xlsx）
-    :type  filetype: str
+    :param filetype: 指定一种或多种类型文件的后缀列表（如['.xlsx']或['.xlsx','.xls']）
+    :type  filetype: list
 
     :return: 文件夹里面所有全文件名列表（包含子文件夹里面的文件）
     :rtype:  list
@@ -33,22 +31,19 @@ def get_allfolder_fullfilename(folder_path:str,filetype:str="ALL") -> list:
     filename_list = []
     for root, dirs, files in os.walk(folder_path):
         for file in files:
-            if filetype == "ALL" :
-                filename_list.append(os.path.join(root, file))
-            elif os.path.splitext(file)[1] == filetype:
+            if os.path.splitext(file)[1] in filetype:
                 filename_list.append(os.path.join(root, file))
     return filename_list
 
-def get_singlefolder_fullfilename(folder_path:str,filetype:str="ALL") -> list:
+def get_singlefolder_fullfilename(folder_path:str,filetype:list) -> list:
     """
     获取待处理文件夹里指定后缀的文件名（单个文件夹，不包括子文件夹的文件）
-    默认为获取所有文件，如果指定了filetype的类型时获取指定文件。
 
     :param folder_path: 文件夹路径
     :type  folder_path: str
 
-    :param filetype: 指定类型文件的后缀（如.xlsx）
-    :type  filetype: str
+    :param filetype: 指定一种或多种类型文件的后缀列表（如['.xlsx']或['.xlsx','.xls']）
+    :type  filetype: list
 
     :return: 文件夹里面所有全文件名列表（包含子文件夹里面的文件）
     :rtype:  list
@@ -57,9 +52,7 @@ def get_singlefolder_fullfilename(folder_path:str,filetype:str="ALL") -> list:
     files = os.listdir(folder_path)
     for file in files:
         # os.path.splitext():分离文件名与扩展名
-        if filetype == "ALL":
-            filename_list.append(folder_path+file)
-        elif os.path.splitext(file)[1] == filetype:
+        if os.path.splitext(file)[1] in filetype:
             filename_list.append(folder_path+file)
     return filename_list
 
@@ -83,7 +76,7 @@ def record_csv(content_list:list,csv_filename:str) -> None:
         # 写入文件
         csv_writer.writerow(content_list)
 
-def record_txt(content:str,txt_filename:str) -> None :
+def record_txt(content:str,txt_filename:str) -> None:
     """
     将content字符串内容按行追加写入txt文件中
     txt文件编码：utf-8
