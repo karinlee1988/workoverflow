@@ -15,25 +15,11 @@
 import os
 import csv
 
-def get_filename(folder_path:str) -> list:
-    """
-    获取文件夹下面所有文件，并返回文件夹里面所有文件名列表（包含子文件夹里面的文件）
 
-    :param folder_path: 文件夹路径
-    :type  folder_path: str
-
-    :return: 文件夹里面所有全文件名列表（包含子文件夹里面的文件）
-    :rtype:  list
+def get_allfolder_fullfilename(folder_path:str,filetype:str="ALL") -> list:
     """
-    filename_list = []
-    for root, dirs, files in os.walk(folder_path):
-        for file in files:
-            filename_list.append(os.path.join(root, file))
-    return filename_list
-
-def get_design_filename(folder_path:str,filetype:str) -> list:
-    """
-    获取文件夹下面所有文件，并返回文件夹里面指定类型的文件名列表（包含子文件夹里面的文件）
+    获取待处理文件夹下面所有文件，并返回文件夹里面指定类型的文件名列表（包含子文件夹里面的文件）
+    默认为获取所有文件，如果指定了filetype的类型时获取指定文件。
 
     :param folder_path: 文件夹路径
     :type  folder_path: str
@@ -47,13 +33,16 @@ def get_design_filename(folder_path:str,filetype:str) -> list:
     filename_list = []
     for root, dirs, files in os.walk(folder_path):
         for file in files:
-            if os.path.splitext(file)[1] == filetype:
+            if filetype == "ALL" :
+                filename_list.append(os.path.join(root, file))
+            elif os.path.splitext(file)[1] == filetype:
                 filename_list.append(os.path.join(root, file))
     return filename_list
 
-def get_singlefolder_filename(folder_path:str,filetype:str) -> list:
+def get_singlefolder_fullfilename(folder_path:str,filetype:str="ALL") -> list:
     """
     获取待处理文件夹里指定后缀的文件名（单个文件夹，不包括子文件夹的文件）
+    默认为获取所有文件，如果指定了filetype的类型时获取指定文件。
 
     :param folder_path: 文件夹路径
     :type  folder_path: str
@@ -68,46 +57,11 @@ def get_singlefolder_filename(folder_path:str,filetype:str) -> list:
     files = os.listdir(folder_path)
     for file in files:
         # os.path.splitext():分离文件名与扩展名
-        if os.path.splitext(file)[1] == filetype:
+        if filetype == "ALL":
+            filename_list.append(folder_path+file)
+        elif os.path.splitext(file)[1] == filetype:
             filename_list.append(folder_path+file)
     return filename_list
-
-def get_xlsx_full_filename(folder_path:str) -> list:
-    """
-    获取待处理文件夹里所有后缀为.xlsx的全文件名
-
-    :param folder_path : 文件夹路径
-    :type folder_path : str
-
-    :return 文件夹里所有后缀为.xlsx的全文件名列表
-    :rtype list
-    """
-    filename_list = os.listdir(folder_path)
-    xlsx_list = []
-    for filename in filename_list:
-        # os.path.splitext():分离文件名与扩展名
-        if os.path.splitext(filename)[1] == '.xlsx':
-            xlsx_list.append(folder_path+filename)
-    return xlsx_list
-
-def get_xlsx_filename(folder_path:str) -> list:
-    """
-    获取待处理文件夹里所有后缀为.xlsx的全文件名
-
-    :param folder_path : 文件夹路径
-    :type folder_path : str
-
-    :return 文件夹里所有后缀为.xlsx的文件名列表
-    :rtype list
-    """
-    filename_list = os.listdir(folder_path)
-    xlsx_list = []
-    for filename in filename_list:
-        # os.path.splitext():分离文件名与扩展名
-        if os.path.splitext(filename)[1] == '.xlsx':
-            xlsx_list.append(filename)
-    return xlsx_list
-
 
 def record_csv(content_list:list,csv_filename:str) -> None:
     """
