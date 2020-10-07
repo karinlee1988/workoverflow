@@ -7,6 +7,7 @@
 # @Blog : https://blog.csdn.net/weixin_43972976
 # @github : https://github.com/karinlee1988/
 # @gitee : https://gitee.com/karinlee/
+# @Personal website : https://karinlee.cn/
 
 """
 本模块用于处理各种类型的数据
@@ -19,7 +20,7 @@ class IdCardNumber(object):
     用于对身份证号码进行处理
     """
 
-    def __init__(self,id_card_number):
+    def __init__(self,id_card_number:str):
         """
         构造函数，传入身份证号码实例化
         :param id_card_number: 身份证号码（15位或者18位）
@@ -27,7 +28,7 @@ class IdCardNumber(object):
         """
         self.id_card_number = id_card_number
 
-    def get_birth(self):
+    def get_birth(self) -> str:
         """
         通过身份证号码获取出生日期(8位字符串）
         :return birth:出生日期
@@ -41,10 +42,10 @@ class IdCardNumber(object):
             birth = '19' + self.id_card_number[6:12]  #目前的15位身份证是19xx年出生
             return birth
         else:
-            return "身份证号码格式不正确"
+            return "ERROR"
 
     @staticmethod
-    def get_checkcode(digital_ontology_code):
+    def get_checkcode(digital_ontology_code:str) -> str or bool:
         """
         静态方法，从身份证号码前17位数字本体码计算第18位校验码
         :param digital_ontology_code:   17位数字本体码
@@ -67,7 +68,7 @@ class IdCardNumber(object):
         else:
             return False
 
-    def fifteen_to_eighteen(self):
+    def fifteen_to_eighteen(self) -> str:
         """
         15位身份证转18位身份证
 
@@ -85,9 +86,9 @@ class IdCardNumber(object):
             digital_ontology_code = self.id_card_number[0:6] + '19' + self.id_card_number[6:15]
             return digital_ontology_code + self.get_checkcode(digital_ontology_code)
         else:
-            return "身份证号码格式不正确"
+            return "ERROR"
 
-    def eighteen_to_fifteen(self):
+    def eighteen_to_fifteen(self) -> str:
         """
         18位身份证转15位身份证
         :return: 15位身份证
@@ -96,7 +97,8 @@ class IdCardNumber(object):
         if len(self.id_card_number) == 18:
             # 去掉第6，7位和第18位即可18位身份证转15位身份证
             return self.id_card_number[0:6] + self.id_card_number[8:17]
-
+        else:
+            return "ERROR"
 
 class RegularExpression(object):
     """
@@ -152,10 +154,12 @@ class RegularExpression(object):
         except AttributeError:
             return 0
 
-
 if __name__ == '__main__':
-    # iaa = IdCardNumber("440228640524722")
+    # test
+    iaa = IdCardNumber("啦啦啦")
     # print(iaa.fifteen_to_eighteen())
     r = RegularExpression(u"阿大撒大撒大苏打ada441881198808150214.。。，asdsad阿达阿三",r'\d{17}[\d|x|X]|\d{15}')
     r2 = r.search()
-    print(r2)
+    sfz =IdCardNumber(r2)
+    print(iaa.eighteen_to_fifteen())
+    print(iaa.get_birth())
