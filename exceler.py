@@ -12,6 +12,8 @@
 本模块用于对excel表格进行各种处理操作
 """
 import pandas as pd
+from pandas.core.frame import DataFrame
+
 from workoverflow.fileio import *
 
 
@@ -47,16 +49,20 @@ def split_workbook_by_column(workbook_path,sheet_index,title_index,column_index)
         # 将得到的dataframe保存成Excel格式，文件名为列字段。
         each_workbook_df.to_excel(x + '.xlsx', index=False,header=False)
 
-def merge_workbook(filespath,sheet_index,title_index):
+def merge_workbook(filespath,sheet_index,title_index,savename):
 
 
     fileslist = get_singlefolder_fullfilename(folder_path=filespath,filetype=[".xlsx"])
     workbook_header_df = pd.read_excel(io=fileslist[0],sheet_name=sheet_index,header=None)[0:title_index]
-    print(workbook_header_df)
+    merge_list = workbook_header_df.values.tolist()
     for file in fileslist:
         each_workbook_source_df = pd.read_excel(io=file,sheet_name=sheet_index,header=None)[title_index:]
-        workbook_merge_df = workbook_header_df.append(each_workbook_source_df).copy()
-    workbook_merge_df.to_excel("1.xlsx",index=False,header=False)
+        each_workbook_source_list = each_workbook_source_df.values.tolist()
+        # for l in each_workbook_source_list:
+        #     merge_list.append(l)
+        merge_list.extend(each_workbook_source_list)
+    workbook_merge_df = DataFrame(merge_list)
+    workbook_merge_df.to_excel(excel_writer=savename,index=False,header=False)
 
 
 
@@ -70,4 +76,4 @@ def merge_workbook(filespath,sheet_index,title_index):
 
 if __name__ == '__main__':
     # split_workbook_by_column("示例.xlsx",0,2,3)
-    merge_workbook("xlsx文件夹\\",0,2)
+    merge_workbook("xlsx文件夹\\",0,2,"已合并.xlsx")
