@@ -15,6 +15,7 @@ import pandas as pd
 
 def split_workbook_by_column(workbook_path,sheet_index,title_index,column_index):
     """
+    将一个excel工作薄中指定的工作表，按列字段进行拆分，拆分后的多个excel表格分别以列字段命名
 
     @param workbook_path: 要拆分的工作薄文件路径
     @type workbook_path:  str
@@ -37,14 +38,12 @@ def split_workbook_by_column(workbook_path,sheet_index,title_index,column_index)
     col = workbook_source_df.iloc[:,column_index].unique()
     # 遍历数组
     for x in col:
-        # 先获取表头dataframe的拷贝
-        each_workbook_header_df = workbook_header_df.copy()
         # 循环，得到每一个列字段的dataframe
         each_workbook_source_df = workbook_source_df[workbook_source_df.iloc[:,column_index] == x]
         # 拼接dataframe，表头部分与数据部分
-        each_workbook_df = each_workbook_header_df.append(each_workbook_source_df)
-        # 将得到的dataframe保存成Excel格式
+        each_workbook_df = workbook_header_df.append(each_workbook_source_df)
+        # 将得到的dataframe保存成Excel格式，文件名为列字段。
         each_workbook_df.to_excel(x + '.xlsx', index=False,header=False)
 
 if __name__ == '__main__':
-    split_workbook_by_column("示例.xlsx",0,1,3)
+    split_workbook_by_column("示例.xlsx",0,2,3)
