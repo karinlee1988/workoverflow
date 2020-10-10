@@ -121,20 +121,35 @@ def worksheet_save_as(path:str,workbook) -> None:
                 worksheet_new.title = name
         workbook_new.save(path + name + '.xlsx')
 
-def compare_different_dataframe(df1,df2):
+def compare_different_dataframe(df1,df2,column_name) -> tuple:
+    """
+
+    :param df1: 第1个dataframe
+    :type df1: pandas.DataFrame
+
+    :param df2: 第2个dataframe
+    :type df2: pandas.DataFrame
+
+    :param column_name: 关联的列名
+    :type column_name: str
+
+    :return: 包含2个dataframe的元组tuple，tuple[0]是df1有df2没有的行，tuple[1]是df2有df1没有的行
+    :rtype: tuple
+    """
+
     # 取df1有而df2没有的
-    dfmerge_1 = pd.concat([df1, df2, df2], axis=0, ignore_index=True)
-    dfmerge_1 = dfmerge_1.drop_duplicates(subset="身份证号码", keep=False)
+    dfmerge_1 = pd.concat([df1, df2, df2], axis=0)
+    dfmerge_1 = dfmerge_1.drop_duplicates(subset=column_name, keep=False)
     # 取df2有但df1没有的
-    print(dfmerge_1)
-    print("----------------------------")
-    dfmerge_2 = pd.concat([df2, df1, df1], axis=0, ignore_index=True)
-    dfmerge_2 = dfmerge_2.drop_duplicates(subset="身份证号码", keep=False)
-    print(dfmerge_2)
+    dfmerge_2 = pd.concat([df2, df1, df1], axis=0)
+    dfmerge_2 = dfmerge_2.drop_duplicates(subset=column_name, keep=False)
+    return dfmerge_1,dfmerge_2
+
 
 if __name__ == '__main__':
-    df_1 = pd.read_excel("tests\\清远数据28增加参保所属县区29.xlsx", header=0,sheet_name=8)
-    df_1 = df_1[df_1['居民医疗县区']=='英德市']
-    df_2 = pd.read_excel("tests\\清远市内控检查疑似重复领取养老待遇情况明细表（居保）.xlsx", header=1,sheet_name=0)
-    df_2 = df_2[df_2['居保所属县区']=='英德市']
-    compare_different_dataframe(df_1,df_2)
+    df_1 = pd.read_excel("tests\\1.xlsx", header=1,sheet_name=0)
+    df_2 = pd.read_excel("tests\\2.xlsx", header=1,sheet_name=0)
+    df_list = compare_different_dataframe(df_1,df_2,"水果")
+    print(df_list[0])
+    print("---------------")
+    print(df_list[1])
