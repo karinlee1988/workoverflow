@@ -20,17 +20,17 @@ def split_workbook_by_column(workbook_path:str,sheet_index:int,title_index:int,c
     """
     将一个excel工作薄中指定的工作表，按列字段进行拆分，拆分后的多个excel表格分别以列字段命名
 
-    @param workbook_path: 要拆分的工作薄文件路径
-    @type workbook_path:  str
+    :param workbook_path: 要拆分的工作薄文件路径
+    :type workbook_path:  str
 
-    @param sheet_index: 要拆分的工作薄的工作表序号（从0开始）
-    @type sheet_index:  int
+    :param sheet_index: 要拆分的工作薄的工作表序号（从0开始）
+    :type sheet_index:  int
 
-    @param title_index: 拆分后表头的行数（从1开始）
-    @type title_index:  int
+    :param title_index: 拆分后表头的行数（从1开始）
+    :type title_index:  int
 
-    @param column_index: 根据某列的列索引号进行拆分（从0开始）
-    @type column_index: int
+    :param column_index: 根据某列的列索引号进行拆分（从0开始）
+    :type column_index: int
     """
     # 将要拆分的工作薄读取为dataframe对象
     workbook_df = pd.read_excel(io=workbook_path,sheet_name=sheet_index,header=None)
@@ -52,19 +52,19 @@ def merge_workbook(filespath:str,sheet_index:int,title_index:int,savename:str) -
     """
     将多个工作薄中同一序号的sheet页合并为1个工作薄
 
-    @param filespath: 要合并的表格放在同一个文件夹下，如"D:/xlsx文件夹/"
-    @type filespath: str
+    :param filespath: 要合并的表格放在同一个文件夹下，如"D:/xlsx文件夹/"
+    :type filespath: str
 
-    @param sheet_index: 表格中的序号（从0开始）
-    @type sheet_index： int
+    :param sheet_index: 表格中的序号（从0开始）
+    :type sheet_index： int
 
-    @param title_index: 要合并的表格中表头行数（合并完成后表头只要1个，合并后表格数据由1个表头和多个内容组成）
-    @type title_index：int
+    :param title_index: 要合并的表格中表头行数（合并完成后表头只要1个，合并后表格数据由1个表头和多个内容组成）
+    :type title_index：int
 
-    @param savename: 保存的文件名称（带路径）
-    @type savename：str
+    :param savename: 保存的文件名称（带路径）
+    :type savename：str
 
-    @return: None
+    :return: None
     """
     # 获取要合并excel表格的文件名，返回文件夹下所有文件名列表
     fileslist = get_singlefolder_fullfilename(folder_path=filespath,filetype=[".xlsx"])
