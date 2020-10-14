@@ -134,4 +134,5 @@ dmypy.json
 *.xlsx
 *.txt
 *.csv
-test.py
+*.doc
+*.docx
