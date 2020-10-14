@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time : 2020/10/13 18:40
 # @Author : 李加林
-# @FileName : 社保月数参保计算器.py
+# @FileName : calculate_months.py
 # @Software : PyCharm
 # @Blog : https://blog.csdn.net/weixin_43972976
 # @github : https://github.com/karinlee1988/
