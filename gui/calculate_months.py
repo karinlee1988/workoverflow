@@ -11,7 +11,7 @@
 
 """
 社保月数参保计算器
-从起始月数和结束月数计算参保月数
+从起始日期和结束日期计算参保月数
 """
 
 import PySimpleGUI as sg
@@ -31,7 +31,7 @@ class CalculationOfMonths(object):
         # 界面布局
         self.layout = [
             # sg.Image()插入图片，支持gif和png
-            [sg.Image(filename="pqpng.png")],
+            [sg.Image(filename="images/pq1.png")],
             # sg.Text()显示文本
             [sg.Text('',font=self.FONT,size=self.SIZE)],
             # sg.Input()是输入框
@@ -47,7 +47,20 @@ class CalculationOfMonths(object):
 
     # 通过起始年月和结束年月计算参保月数
     @staticmethod
-    def calc(begin_month,end_month):
+    def calc(begin_month:str,end_month:str) -> int:
+        """
+        从起始日期和结束日期计算参保月数
+
+        :param begin_month: 起始日期
+        :type begin_month: str
+
+        :param end_month: 结束日期
+        :type end_month: str
+
+        :return: 参保月数
+        :rtype: int
+        """
+
         full_month = (int(end_month[0:4]) - int(begin_month[0:4])) * 12 + (
                 int(end_month[4:6]) - int(begin_month[4:6])) + 1
         return full_month
