@@ -8,21 +8,22 @@
 # @github : https://github.com/karinlee1988/
 # @gitee : https://gitee.com/karinlee/
 
-import win32com.client as win32
-import os
-word = win32.gencache.EnsureDispatch('Word.Application')
-#启动word对象应用
-word.Visible = False
-path = r'D:\MyNutstore\工作文档\01_工作项目\10_群众来信答复和投诉答复'
-files = []
-for filename in os.listdir(path):
-    filename = os.path.join(path,filename)
-    files.append(filename)
-#新建合并后的文档
-output = word.Documents.Add()
-for file in files:
-    output.Application.Selection.InsertFile(file)#拼接文档
-#获取合并后文档的内容
-doc = output.Range(output.Content.Start, output.Content.End)
-output.SaveAs(r'D:\MyNutstore\工作文档\01_工作项目\10_群众来信答复和投诉答复\result.docx') #保存
-output.Close()
+import docx
+from docx import Document  # 导入库
+from workoverflow.fileio import record_csv
+
+path = 'source.docx'  # 文件路径
+document = Document(path)  # 读入文件
+tables = document.tables  # 获取文件中的表格集
+print(tables)
+for table in tables:
+    for i, row in enumerate(table.rows):  # 读每行
+        row_content = []
+        for cell in row.cells:  # 读一行中的所有单元格
+            c = cell.text
+            row_content.append(c)
+        record_csv(row_content,"result1.csv")
+
+        # print (row_content) #以列表形式导出每一行数据
+
+
