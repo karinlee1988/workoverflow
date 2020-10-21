@@ -12,30 +12,52 @@ import os
 import openpyxl
 
 
-def get_fullfilename(folder_path:str) -> list:
+class DirectoryTree(object):
 
-    filename_list = []
-    for root, dirs, files in os.walk(folder_path):
-        for file in files:
-            if '.' in file:
-                filename_list.append(os.path.join(root, file))
-    return filename_list
+    def __init__(self,folder_path):
+        self.folder_path = folder_path
+        self.absolute_path_list = []
+        self.wb = openpyxl.Workbook()
+        self.ws = self.wb.active
+        self.path_lenth = len(folder_path)
+        self.get_absolute_path()
+        self.write_workbook()
 
-wb = openpyxl.Workbook()
-ws = wb.active
-row = 2
-path = r'D:\MyNutstore\PersonalStudy\Python\WorkOverflow\worktools'
-l = len(path) + 1
-ws['A1'].value = path
-for filename in get_fullfilename(path):
-    r_filename = filename[l:]
-    r_list = r_filename.split('\\')
-    c = 2
-    for e in r_list:
-        if '.' not in e:
-            ws.cell(column=c,row=row).value = e+'\\'
-        else:
-            ws.cell(column=c, row=row).value = e
-        c+=1
-    row+=1
-wb.save("tree.xlsx")
+    def get_absolute_path(self) :
+        for root, dirs, files in os.walk(self.folder_path):
+            for file in files:
+                if '.' in file:
+                    self.absolute_path_list.append(os.path.join(root, file))
+
+    def write_workbook(self):
+        self.ws['A1'].value = self.folder_path
+        self.ws['A1'].hyperlink = self.folder_path
+        row = 2
+        for each_path in self.absolute_path_list:
+            relative_path = each_path[self.path_lenth+1:]
+            r_list = relative_path.split('\\')
+            column = 2
+            for e in r_list:
+                if '.' not in e:
+                    self.ws.cell(column=column, row=row).value = e + '\\'
+
+                else:
+                    self.ws.cell(column=column, row=row).value = e
+                    self.ws.cell(column=column, row=row).hyperlink = r'' + each_path
+                    break
+
+                column += 1
+            row += 1
+        self.wb.save("tree.xlsx")
+
+
+if __name__ == '__main__':
+
+    DirectoryTree(r"D:\MyNutstore\PersonalStudy\Python\WorkOverflow\worktools")
+
+
+
+
+
+
+
