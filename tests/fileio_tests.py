@@ -9,7 +9,7 @@
 # @gitee : https://gitee.com/karinlee/
 # @Personal website : https://karinlee.cn/
 
-# import os
+import os
 # def findAllFile(base):
 #     l = []
 #     for root, ds, fs in os.walk(base):
@@ -19,5 +19,6 @@
 #
 #     return l
 #
-# f = r"D:\MyNutstore\PersonalStudy\Python\WorkOverflow"
+f = r"D:\MyNutstore\PersonalStudy\Python\WorkOverflow"
 # print(findAllFile(f))
+print(os.path.splitext(f))
