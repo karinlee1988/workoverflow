@@ -10,6 +10,7 @@
 
 import os
 import openpyxl
+import PySimpleGUI as sg
 from openpyxl.styles import Font
 # from openpyxl.utils import get_column_letter
 
@@ -51,14 +52,17 @@ class DirectoryTree(object):
                          '.mkv',
                          '.mp3',
         )
-        # 创建工作薄用于写目录树
-        self.wb = openpyxl.Workbook()
-        self.ws = self.wb.active
+
+
         # 计算文件夹路径长度，用于后续计算相对路径
         self.path_lenth = len(folder_path)
         # 执行
-        self.get_absolute_path()
-        self.write_workbook()
+
+    def set_filetype(self, filetype: list or tuple):
+        """
+        设置需要的文件格式
+        """
+        self.filetype = filetype
 
     def get_absolute_path(self) :
         """
@@ -73,13 +77,16 @@ class DirectoryTree(object):
         """
         按步骤将文件名拆分并写入excel，形成目录树
         """
+        # 创建工作薄用于写目录树
+        wb = openpyxl.Workbook()
+        ws = wb.active
         # 设置字体类型（该字体类型为添加下划线）
         font = Font(underline='single')
-        self.ws['A1'].value = self.folder_path+'\\'
+        ws['A1'].value = self.folder_path+'\\'
         # 设置超链接
-        self.ws['A1'].hyperlink = self.folder_path
+        ws['A1'].hyperlink = self.folder_path
         # 应用字体
-        self.ws['A1'].font = font
+        ws['A1'].font = font
         # row,column 是临时的变量，用于逐行或逐列按需写入数据用
         row = 2
         for each_path in self.absolute_path_list:
@@ -90,20 +97,32 @@ class DirectoryTree(object):
             for e in r_list:
                 # 判断拆分后的路径是文件夹还是文件
                 if os.path.splitext(e)[1] not in self.filetype :
-                    self.ws.cell(column=column, row=row).value = e + '\\'
+                    ws.cell(column=column, row=row).value = e + '\\'
                 else:
-                    self.ws.cell(column=column, row=row).value = e
+                    ws.cell(column=column, row=row).value = e
                     # 添加超链接与下划线
-                    self.ws.cell(column=column, row=row).hyperlink = r'' + each_path
-                    self.ws.cell(column=column, row=row).font = font
+                    ws.cell(column=column, row=row).hyperlink = r'' + each_path
+                    ws.cell(column=column, row=row).font = font
                 column += 1
             row += 1
-        self.wb.save("tree.xlsx")
+        wb.save("tree.xlsx")
         # 保存后直接打开excel文件
         # os.startfile("tree.xlsx")
 
+    def creat_directorytree(self):
+        self.get_absolute_path()
+        self.write_workbook()
+
+
+
+
+
+
+
 if __name__ == '__main__':
-    DirectoryTree(r"D:\MyNutstore\工作文档\01_工作项目\01_社保基金安全@[广东省人社厅,清远市人社局,清远市社保局,英德市人社局]")
+
+    tree = DirectoryTree(r"D:\MyNutstore\工作文档\01_工作项目\03_党风廉政建设@[英德市纪委监委]\[长期工作]英德市主体责任和勤廉监督业务平台（按要求上报材料）")
+    tree.creat_directorytree()
 
 
 
