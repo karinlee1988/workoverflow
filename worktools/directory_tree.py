@@ -52,8 +52,6 @@ class DirectoryTree(object):
                          '.mkv',
                          '.mp3',
         )
-
-
         # 计算文件夹路径长度，用于后续计算相对路径
         self.path_lenth = len(folder_path)
         # 执行
@@ -114,19 +112,58 @@ class DirectoryTree(object):
         self.write_workbook()
 
 
+class DirectoryTreeGUI(object):
 
+    def __init__(self):
+        # 设置pysimplegui主题，不设置的话就用默认主题
+        # sg.ChangeLookAndFeel('Purple')
+        # 定义2个常量，供下面的layout直接调用，就不用一个个元素来调字体了
+        # 字体和字体大小
+        self.FONT = ("微软雅黑", 16)
+        # 可视化界面上元素的大小
+        self.SIZE = (20, 1)
+        # 界面布局
+        self.layout = [
+            # sg.Image()插入图片，支持gif和png
+            [sg.Image(filename="images/pq1.png",pad=(130,0))],
+            # sg.Text()显示文本
+            [sg.Text('', font=self.FONT, size=self.SIZE)],
+            # sg.Input()是输入框
+            [sg.Text('请选择要生成目录树的文件夹：', font=self.FONT, size=(30, 1))],
+            [sg.Input(key="_FOLDER_", readonly=True, size=(36, 1), font=self.FONT),
+             sg.FolderBrowse(button_text='选择文件夹', size=(10, 1), font=self.FONT)],
+            [sg.Text('')],
+            [sg.Btn('生成目录树', key='_TREE_', font=("微软雅黑", 16), size=(23, 1)),
+             sg.Input(key='_RESULT_', readonly=True, size=(10, 1), font=self.FONT)],
+        ]
+        # 创建窗口，引入布局，并进行初始化
+        # 创建时，必须要有一个名称，这个名称会显示在窗口上
+        self.window = sg.Window('目录树生成工具by李加林', layout=self.layout, finalize=True)
 
-
+        # 窗口持久化
+    def run(self):
+        # 创建一个事件循环，否则窗口运行一次就会被关闭
+        while True:
+            # 监控窗口情况
+            event, value = self.window.Read()
+            # 当获取到事件时，处理逻辑（按钮绑定事件，点击按钮即触发事件）
+            if event == '_TREE_':
+                folder = value['_FOLDER_']
+                # 生成目录树
+                tree = DirectoryTree(folder_path=folder)
+                tree.creat_directorytree()
+                # 函数完成后返回处理完成标志到窗口界面上
+                self.window.Element("_RESULT_").Update("处理完成！")
+            # 如果事件的值为 None，表示点击了右上角的关闭按钮，则会退出窗口循环
+            if event is None:
+                break
+        self.window.close()
 
 
 if __name__ == '__main__':
-
-    tree = DirectoryTree(r"D:\MyNutstore\工作文档\01_工作项目\03_党风廉政建设@[英德市纪委监委]\[长期工作]英德市主体责任和勤廉监督业务平台（按要求上报材料）")
-    tree.creat_directorytree()
-
-
-
-
-
+    dt = DirectoryTreeGUI()
+    dt.run()
+    # tree = DirectoryTree(r"D:\MyNutstore\工作文档\01_工作项目\03_党风廉政建设@[英德市纪委监委]\[长期工作]英德市主体责任和勤廉监督业务平台（按要求上报材料）")
+    # tree.creat_directorytree()
 
 
