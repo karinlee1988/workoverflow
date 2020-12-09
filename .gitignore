@@ -136,3 +136,4 @@ dmypy.json
 *.csv
 *.doc
 *.docx
+*.pdf
