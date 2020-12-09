@@ -53,7 +53,7 @@ def get_singlefolder_fullfilename(folder_path:str,filetype:list) -> list:
     for file in files:
         # os.path.splitext():分离文件名与扩展名
         if os.path.splitext(file)[1] in filetype:
-            filename_list.append(folder_path+file)
+            filename_list.append(folder_path+'\\'+file)
     return filename_list
 
 def get_normal_filename(fullfilename:str) -> str:
