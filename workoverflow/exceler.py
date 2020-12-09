@@ -67,7 +67,7 @@ def merge_workbook(filespath:str,sheet_index:int,title_index:int,savename:str) -
     :return: None
     """
     # 获取要合并excel表格的文件名，返回文件夹下所有文件名列表
-    fileslist = get_singlefolder_fullfilename(folder_path=filespath,filetype=[".xlsx"])
+    fileslist = get_singlefolder_fullfilename(folder_path=filespath,filetype=[".xlsx",'.xls'])
     # 拿列表中第1个读取后切片，获得表头dataframe
     workbook_header_df = pd.read_excel(io=fileslist[0],sheet_name=sheet_index,header=None)[0:title_index]
     # merge_list 用于循环时添加数据，先将表头dataframe转为列表后赋值
@@ -85,4 +85,5 @@ def merge_workbook(filespath:str,sheet_index:int,title_index:int,savename:str) -
 
 if __name__ == '__main__':
     # split_workbook_by_column("示例.xlsx",0,2,3)
-    merge_workbook("xlsx文件夹\\",0,2,"已合并.xlsx")
+    merge_workbook("D:\\MyNutstore\\PersonalStudy\\Python\\帮同事做的小工具\\20201112_谢昊础\\英德市企业缴纳社保相关数据\\",
+                   0,1,"已合并.xlsx")
