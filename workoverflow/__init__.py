@@ -10,4 +10,4 @@
 # @Personal website : https://karinlee.cn/
 
 __author__ = '李加林'
-__all__ = ['data', 'exceler', 'fileio','dataobject','search']
+__all__ = ['data', 'exceler', 'fileio','dataobject','search','pdfer']
