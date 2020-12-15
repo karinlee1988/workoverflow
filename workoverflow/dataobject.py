@@ -14,14 +14,14 @@
 
 import openpyxl
 import pandas as pd
-from openpyxl.utils import get_column_letter, column_index_from_string
+from openpyxl.utils import column_index_from_string  # ,get_column_letter
 
-def openpyxl_vlookup(
-        wb_template,
+def vlookup(
+        wb_template:object,
         ws_template_index:int,
         template_key:str,
         template_value:str,
-        wb_source,
+        wb_source:object,
         ws_source_index:int,
         source_key:str,
         source_value:str,
@@ -92,7 +92,7 @@ def openpyxl_vlookup(
         ws_template.cell(row=row, column=template_value_index).value = dic.get(
             ws_template.cell(row=row, column=template_key_index).value)
 
-def worksheet_save_as(path:str,workbook) -> None:
+def worksheet_save_as(path:str,workbook:object) -> None:
     """
     将一个工作薄里面的多个工作表分别另存为独立的工作薄，独立的工作薄名称为原工作薄各工作表表名
 
