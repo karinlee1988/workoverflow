@@ -12,6 +12,7 @@
 import os
 from fpdf import FPDF
 from PIL import Image
+from PyPDF2 import PdfFileReader, PdfFileWriter,PdfFileMerger
 from workoverflow.fileio import get_singlefolder_fullfilename
 
 def pic_to_pdf(pdf_filename: str, pic_path_list: list) -> None:
@@ -40,7 +41,7 @@ def pic_to_pdf(pdf_filename: str, pic_path_list: list) -> None:
 	#pdf另存为
 	pdf.output(pdf_filename, "F")
 
-def combine2Pdf(pdf_filename:str,pic_path:str) -> None :
+def combine_pic_to_pdf(pdf_filename:str,png_files:list) -> None :
 	"""
 	将多个图片合成一个pdf
 	（注意：这种方式按照pic_size将图片进行缩放，适合大小不一的图片）
@@ -48,17 +49,12 @@ def combine2Pdf(pdf_filename:str,pic_path:str) -> None :
 	:param pdf_filename : 生成的pdf绝对路径
     :type  pdf_filename : str
 
-    :param pic_path: 图片的绝对路径
-    :type  pic_path: str
+    :param png_files: 图片的绝对路径列标
+    :type  png_files: list
 	"""
 	# 设置图片默认尺寸，A4默认(96ppi)
 	pic_size = (794, 1123)
-	# 获取文件夹下所有图片路径
-	png_files = get_singlefolder_fullfilename(pic_path,
-											 ['.JPG','.jpg','.jpeg','.gif','.png','.PNG'])
 	sources = []
-	# 按名称排序
-	png_files.sort()
 	output = Image.open(png_files[0])
 	png_files.pop(0)
 	# 每张图片读取为PIL对象，并进行缩放至默认尺寸
@@ -78,14 +74,33 @@ def combine2Pdf(pdf_filename:str,pic_path:str) -> None :
 	# 另存为pdf
 	output.save(pdf_filename, "pdf", resolution=100.0, save_all=True, append_images=sources)
 
-if __name__ == "__main__":
-	folder = r"D:\MyNutstore\PersonalStudy\Python\WorkOverflow\tests\images"
-	pdffile = "result1111.pdf"
-	combine2Pdf(pdffile, folder)
+
+def merge_pdfs(pdf_file_paths, output):
 
 
-#
-# if __name__ == '__main__':
-# 	pic_list = get_singlefolder_fullfilename(r"D:\MyNutstore\PersonalStudy\Python\WorkOverflow\tests\images",
-# 											 ['.JPG','.jpg','.jpeg','.gif','.png','.PNG'])
-# 	pic_to_pdf("resultx.pdf",pic_list)
+	# 创建一个空白的PdfFileWriter对象
+	pdf_writer = PdfFileWriter()
+	# 对路径下所有pdf文件进行遍历
+	for pdf_file_path in pdf_file_paths:
+		# 读取为PdfFileReader对象
+		pdf_reader = PdfFileReader(pdf_file_path)
+		# 遍历每个pdf文件的页面
+		for page in range(pdf_reader.getNumPages()):
+			# 将每页添加到writer对象
+			pdf_writer.addPage(pdf_reader.getPage(page))
+
+	# 写入合并的pdf
+	with open(output, 'wb') as out:
+		pdf_writer.write(out)
+
+
+if __name__ == '__main__':
+	path = get_singlefolder_fullfilename(r"D:\MyNutstore\PersonalStudy\Python\WorkOverflow\tests\images",[".pdf"])
+	path.sort()
+	merge_pdfs(path, output='mergedx.pdf')
+
+
+
+
+
+
