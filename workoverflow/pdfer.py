@@ -75,8 +75,18 @@ def combine_pic_to_pdf(pdf_filename:str,png_files:list) -> None :
 	output.save(pdf_filename, "pdf", resolution=100.0, save_all=True, append_images=sources)
 
 
-def merge_pdfs(pdf_file_paths, output):
+def merge_pdfs(pdf_file_paths:iter, output:str) -> None:
+	"""
 
+	Parameters
+	----------
+	pdf_file_paths: 要合并的pdf文件全文件名（多个）
+	output:另存为的合并pdf全文件名
+
+
+	-------
+
+	"""
 
 	# 创建一个空白的PdfFileWriter对象
 	pdf_writer = PdfFileWriter()
@@ -88,7 +98,6 @@ def merge_pdfs(pdf_file_paths, output):
 		for page in range(pdf_reader.getNumPages()):
 			# 将每页添加到writer对象
 			pdf_writer.addPage(pdf_reader.getPage(page))
-
 	# 写入合并的pdf
 	with open(output, 'wb') as out:
 		pdf_writer.write(out)
