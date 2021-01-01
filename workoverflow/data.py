@@ -100,7 +100,7 @@ class IdCardNumber(object):
         else:
             return "ERROR"
 
-class RegularExpression(object):
+class RegExp(object):
     """
     使用正则表达式从混乱的数据（string）中匹配符合格式要求的数据
 
@@ -158,7 +158,7 @@ if __name__ == '__main__':
     # test
     iaa = IdCardNumber("啦啦啦")
     # print(iaa.fifteen_to_eighteen())
-    r = RegularExpression(u"阿大撒大撒大苏打ada441881198808150214.。。，asdsad阿达阿三",r'\d{17}[\d|x|X]|\d{15}')
+    r = RegExp(u"阿大撒大撒大苏打ada441881198808150214.。。，asdsad阿达阿三",r'\d{17}[\d|x|X]|\d{15}')
     r2 = r.search()
     sfz =IdCardNumber(r2)
     print(iaa.eighteen_to_fifteen())
