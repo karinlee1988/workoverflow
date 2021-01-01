@@ -16,7 +16,7 @@ from workoverflow.dataobject import vlookup
 
 class VlookupGui(object):
     """
-    tkinter GUI界面模板（可选择文件进行操作版）
+    python实现vlookup图形工具
     """
     def __init__(self):
         """
@@ -51,8 +51,6 @@ class VlookupGui(object):
     def img_pack(self):
         """
         窗口图片横幅
-        :return:
-        :rtype:
         """
         # 图片贴上去
         img_lable = tk.Label(self.master, image=self.photo)
@@ -61,22 +59,20 @@ class VlookupGui(object):
     def window(self):
         """
         主界面布局设置
-        :return:
-        :rtype:
         """
         # 调整窗口默认大小及在屏幕上的位置
         self.master.geometry("800x900+550+50")
         # 窗口的标题栏，自己修改
-        self.master.title("vlookup工具by李加林")
+        self.master.title("vlookup工具by李加林v1.0")
         # 把标题贴上去，自己修改
         tk.Label(self.master,text="vlookup工具by李加林",font=("黑体",20)).pack()
-        tk.Label(self.master, text="                    ", font=("黑体", 18)).pack()
+        tk.Label(self.master, text="-----------------------", font=("黑体", 18)).pack()
+        tk.Label(self.master, text="                       ", font=("黑体", 18)).pack()
 
     def frame(self):
         """
         框架布局设置
-        :return:
-        :rtype:
+
         """
         # 框架贴上去，再在框架里添加Lable，Entry，Button等控件
         frame1 = tk.Frame(self.master)
@@ -92,19 +88,19 @@ class VlookupGui(object):
         tk.Button(frame1, text="选择主工作薄", command=self.select_temp_path, font=("黑体", 16)).grid(row=2, column=2)
         tk.Button(frame1, text="选择数据工作薄", command=self.select_source_path, font=("黑体", 16)).grid(row=3, column=2)
 
-        tk.Label(frame2, text="主工作薄工作表序号:", font=("黑体", 16)).grid(row=1, column=0)
+        tk.Label(frame2, text="主工作薄工作表序号（从1开始）:", font=("黑体", 16)).grid(row=1, column=0)
         tk.Entry(frame2, textvariable=self.v1).grid(row=1, column=1)
-        tk.Label(frame2, text="主工作薄用于查找的列:", font=("黑体", 16)).grid(row=2, column=0)
+        tk.Label(frame2, text="主工作薄用于查找的列名:", font=("黑体", 16)).grid(row=2, column=0)
         tk.Entry(frame2, textvariable=self.v2).grid(row=2, column=1)
-        tk.Label(frame2, text="主工作薄要填写的列:", font=("黑体", 16)).grid(row=3, column=0)
+        tk.Label(frame2, text="主工作薄要填写的列名:", font=("黑体", 16)).grid(row=3, column=0)
         tk.Entry(frame2, textvariable=self.v3).grid(row=3 ,column=1)
-        tk.Label(frame2, text="数据工作薄工作表序号:", font=("黑体", 16)).grid(row=4, column=0)
+        tk.Label(frame2, text="数据工作薄工作表序号（从1开始）:", font=("黑体", 16)).grid(row=4, column=0)
         tk.Entry(frame2, textvariable=self.v4).grid(row=4, column=1)
-        tk.Label(frame2, text="数据工作薄对应主工作薄的列:", font=("黑体", 16)).grid(row=5, column=0)
+        tk.Label(frame2, text="数据工作薄对应主工作薄的列名:", font=("黑体", 16)).grid(row=5, column=0)
         tk.Entry(frame2, textvariable=self.v5).grid(row=5, column=1)
-        tk.Label(frame2, text="数据工作薄提供数据列:", font=("黑体", 16)).grid(row=6, column=0)
+        tk.Label(frame2, text="数据工作薄提供数据列名:", font=("黑体", 16)).grid(row=6, column=0)
         tk.Entry(frame2, textvariable=self.v6).grid(row=6 ,column=1)
-        tk.Label(frame2, text="开始vlookup行数:", font=("黑体", 16)).grid(row=7, column=0)
+        tk.Label(frame2, text="从第几行开始:", font=("黑体", 16)).grid(row=7, column=0)
         tk.Entry(frame2, textvariable=self.v7).grid(row=7, column=1)
 
         # 按这个按钮执行主程序
@@ -114,8 +110,7 @@ class VlookupGui(object):
     def select_temp_path(self):
         """
         选择文件，并获取文件的绝对路径
-        :return:
-        :rtype:
+
         """
         # 选择文件，path_select变量接收文件地址
         # 注意：self.path 是tk.StringVar()对象，而path_select是str变量
@@ -129,8 +124,7 @@ class VlookupGui(object):
     def select_source_path(self):
         """
         选择文件，并获取文件的绝对路径
-        :return:
-        :rtype:
+
         """
         # 选择文件，path_select变量接收文件地址
         # 注意：self.path 是tk.StringVar()对象，而path_select是str变量
@@ -143,9 +137,7 @@ class VlookupGui(object):
 
     def main(self):
         """
-        这个是主程序，最好将非gui版的程序封装成类，接收该GUI类的参数后实例化运行
-        :return:
-        :rtype:
+        程序入口
         """
         wb_template = openpyxl.load_workbook(self.temp_path.get())
         wb_source = openpyxl.load_workbook(self.source_path.get())
@@ -165,5 +157,5 @@ class VlookupGui(object):
         self.flag.set("处理完成！")
 
 if __name__ == '__main__':
-    # 实例化运行
+    # 运行
     app = VlookupGui()
