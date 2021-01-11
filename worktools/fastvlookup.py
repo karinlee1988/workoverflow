@@ -25,7 +25,7 @@ class VlookupGui(object):
         # 新建窗口
         self.master = tk.Tk()
         # 在界面顶部添加横幅图片
-        self.photo = tk.PhotoImage(file="images\\doge4.gif")
+        self.photo = tk.PhotoImage(file="images\\doge2.gif")
         # self.path 用于存放选择的文件路径
         # self.flag 当程序运行完成后给用户提示信息
         # 注意！这些都是tk.StringVar()对象，不是str，其他地方要用的话要用get()方法获取str
@@ -120,6 +120,7 @@ class VlookupGui(object):
         path_select = path_select.replace("/", "\\\\")
         # self.path设置path_select的值
         self.temp_path.set(path_select)
+        self.flag.set("准备进行vlookup...")
 
     def select_source_path(self):
         """
