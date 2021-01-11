@@ -31,7 +31,7 @@ class CalculationOfMonths(object):
         # 界面布局
         self.layout = [
             # sg.Image()插入图片，支持gif和png
-            [sg.Image(filename="images/pq1.png")],
+            [sg.Image(filename="images/peppa.png")],
             # sg.Text()显示文本
             [sg.Text('',font=self.FONT,size=self.SIZE)],
             # sg.Input()是输入框
@@ -60,10 +60,12 @@ class CalculationOfMonths(object):
         :return: 参保月数
         :rtype: int
         """
-
-        full_month = (int(end_month[0:4]) - int(begin_month[0:4])) * 12 + (
+        try:
+            full_month = (int(end_month[0:4]) - int(begin_month[0:4])) * 12 + (
                 int(end_month[4:6]) - int(begin_month[4:6])) + 1
-        return full_month
+            return full_month
+        except ValueError:
+            return "#ERROR"
 
     # 窗口持久化
     def run(self):
@@ -75,10 +77,11 @@ class CalculationOfMonths(object):
             if event == '_SUMMIT_':
                 begin = value['_BEGIN_']
                 end = value['_END_']
-                if len(begin) in [6,8] and len(end) in[6,8] and begin < end:
+                if begin.isdigit() and len(begin) in [6,8] \
+                        and end.isdigit() and len(end) in[6,8] and begin < end:
                     result = self.calc(begin,end)
                 else:
-                    result = "输入值非法！"
+                    result = "#ERROR#"
                 # 将变量result的值更新至窗口相应元素上
                 self.window.Element("_VALUE_").Update(result)
             # 如果事件的值为 None，表示点击了右上角的关闭按钮，则会退出窗口循环
