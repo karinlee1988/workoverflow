@@ -59,7 +59,7 @@ class ExcelsSearcher(object):
                 element = value['_ELEMENT_']
                 # 生成目录树
                 search = ElementSearch(source_path=folder,element=element)
-                search.search_element()
+                search.search_element_xlsx()
                 # 函数完成后返回处理完成标志到窗口界面上
                 self.window.Element("_RESULT_").Update("处理完成！")
             # 如果事件的值为 None，表示点击了右上角的关闭按钮，则会退出窗口循环

@@ -45,9 +45,9 @@ class ElementSearch(object):
         """
         return '\t' + str(x)
 
-    def search_element(self):
+    def search_element_xlsx(self):
         """
-        使用openpyxl开始进行搜索
+        使用openpyxl开始进行搜索，支持.xlsx文件
         """
         # 获取文件名，只支持xlsx
         file_list = get_allfolder_fullfilename(self.source_path, [".xlsx", ])
@@ -70,12 +70,14 @@ class ElementSearch(object):
                             record_csv(row_list, self.element + "_搜索结果.csv")
                             break
 
-    def search_element_plus(self):
+    def search_element_xls(self):
         """
-        升级版方式，使用pandas进行搜索，速度相对更快
+        使用pandas进行搜索，支持.xls文件。
+        此方式速度更快，如果需要支持.xlsx文件的话，需要配置openpyxl引擎
+        pd.read_excel(engine='openpyxl')
         """
         # 获取文件名，支持xls，xlsx
-        file_list = get_allfolder_fullfilename(self.source_path, [".xlsx",".xls" ])
+        file_list = get_allfolder_fullfilename(self.source_path, [".xls" ])
         # 初始化csv，用于存放搜索结果
         record_csv(['文件路径', '工作表名', '行号', '列号'], self.element + "_搜索结果.csv")
         for filename in file_list:
@@ -101,5 +103,5 @@ class ElementSearch(object):
 
 if __name__ == '__main__':
     s = ElementSearch(r"D:\MyNutstore\PersonalStudy\Python\WorkOverflow\tests\source","黄俊章")
-    s.search_element_plus()
+    s.search_element_xlsx()
 
