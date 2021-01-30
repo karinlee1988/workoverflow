@@ -12,7 +12,7 @@
 import openpyxl
 import tkinter as tk
 import tkinter.filedialog
-from workoverflow.dataobject import vlookup
+from workoverflow.exceler import vlookup
 
 class VlookupGui(object):
     """
