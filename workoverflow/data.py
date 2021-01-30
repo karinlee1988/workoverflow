@@ -141,7 +141,7 @@ class RegExp(object):
 
     def match(self):
         """
-        尝试从字符串的起始位置匹配一个模式，如果不是起始位置匹配成功的话，match()就返回none
+        尝试从字符串的起始位置匹配一个模式，如果不是起始位置匹配成功的话，match()就返回None
 
         :return:
         :rtype:
@@ -154,12 +154,26 @@ class RegExp(object):
         except AttributeError:
             return 0
 
+    def findall(self):
+        """
+        从字符串的起始位置匹配所有符合的模式，将匹配到的模式作为列表返回
+
+        :return:
+        :rtype:
+        """
+        try:
+            result_list = re.findall(self.pattern,self.content)
+            return result_list
+        except AttributeError:
+            return 0
+
 if __name__ == '__main__':
     # test
 
     # print(iaa.fifteen_to_eighteen())
-    r = RegExp(u"阿大撒大撒大苏打ada441881198808150214.。。，asdsad阿达阿三",r'\d{17}[\d|x|X]|\d{15}')
+    r = RegExp(u"阿大撒大撒大苏打ada441881198808150214.。adsadadsa441801198810142342。，asdsad阿达阿三",r'\d{17}[\d|x|X]|\d{15}')
     r2 = r.search()
-    sfz =IdCardNumber(r2)
-    print(sfz.eighteen_to_fifteen())
-    print(sfz.get_birth())
+    print(r2)
+    # sfz =IdCardNumber(r2)
+    # print(sfz.eighteen_to_fifteen())
+    # print(sfz.get_birth())

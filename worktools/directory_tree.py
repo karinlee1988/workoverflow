@@ -8,15 +8,15 @@
 # @github : https://github.com/karinlee1988/
 # @gitee : https://gitee.com/karinlee/
 
+"""
+从一个文件夹路径生成目录树（常用格式文件会被写入），并写入excel文档（带超链接）
+"""
+
 import os
 import openpyxl
 import PySimpleGUI as sg
 from openpyxl.styles import Font
 # from openpyxl.utils import get_column_letter
-
-"""
-从一个文件夹路径生成目录树（常用格式文件会被写入），并写入excel文档（带超链接）
-"""
 
 class DirectoryTree(object):
     """
@@ -111,7 +111,6 @@ class DirectoryTree(object):
         self.get_absolute_path()
         self.write_workbook()
 
-
 class DirectoryTreeGUI(object):
 
     def __init__(self):
@@ -158,7 +157,6 @@ class DirectoryTreeGUI(object):
             if event is None:
                 break
         self.window.close()
-
 
 if __name__ == '__main__':
     dt = DirectoryTreeGUI()
