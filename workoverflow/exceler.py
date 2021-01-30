@@ -33,7 +33,8 @@ def split_workbook_by_column(workbook_path:str,sheet_index:int,title_index:int,c
     :type column_index: int
     """
     # 将要拆分的工作薄读取为dataframe对象
-    workbook_df = pd.read_excel(io=workbook_path,sheet_name=sheet_index,header=None)
+    # 20210130更新：xlrd库更新到2.x后，无法读取xlsx文件，现在要读取的话需要pd.read_excel(engine='openpyxl')指定引擎
+    workbook_df = pd.read_excel(io=workbook_path,sheet_name=sheet_index,header=None,engine='openpyxl')
     # 获取工作薄的表头部分和数据部分，生成2个dataframe
     workbook_header_df = workbook_df[0:title_index]
     workbook_source_df = workbook_df[title_index:]
@@ -67,9 +68,9 @@ def merge_workbook(filespath:str,sheet_index:int,title_index:int,savename:str) -
     :return: None
     """
     # 获取要合并excel表格的文件名，返回文件夹下所有文件名列表
-    fileslist = get_singlefolder_fullfilename(folder_path=filespath,filetype=[".xlsx",'.xls'])
+    fileslist = get_singlefolder_fullfilename(folder_path=filespath,filetype=[".xlsx"])
     # 拿列表中第1个读取后切片，获得表头dataframe
-    workbook_header_df = pd.read_excel(io=fileslist[0],sheet_name=sheet_index,header=None)[0:title_index]
+    workbook_header_df = pd.read_excel(io=fileslist[0],sheet_name=sheet_index,header=None,engine='openpyxl')[0:title_index]
     # merge_list 用于循环时添加数据，先将表头dataframe转为列表后赋值
     merge_list = workbook_header_df.values.tolist()
     # 循环对每个文件名通过pd.read_excel读取后，转为列表，extend拼接，不断完善merge_list
@@ -84,6 +85,6 @@ def merge_workbook(filespath:str,sheet_index:int,title_index:int,savename:str) -
     workbook_merge_df.to_excel(excel_writer=savename,index=False,header=False)
 
 if __name__ == '__main__':
-    # split_workbook_by_column("示例.xlsx",0,2,3)
-    merge_workbook("D:\\MyNutstore\\PersonalStudy\\Python\\帮同事做的小工具\\20201112_谢昊础\\英德市企业缴纳社保相关数据\\",
-                   0,1,"已合并.xlsx")
+    split_workbook_by_column(r"D:\MyNutstore\PersonalStudy\PYTHON\WorkOverflow\tests\xlsx\test1.xls",0,1,1)
+    # merge_workbook("D:\\MyNutstore\\PersonalStudy\\Python\\帮同事做的小工具\\20201112_谢昊础\\英德市企业缴纳社保相关数据\\",
+    #                0,1,"已合并.xlsx")

@@ -30,7 +30,7 @@ class WorkbookSplit(object):
         # 界面布局
         self.layout = [
             # sg.Image()插入图片，支持gif和png
-            [sg.Image(filename="images/pq1.png",pad=(120,0))],
+            [sg.Image(filename="images/peppa.png",pad=(120,0))],
             # sg.Text()显示文本
             [sg.Text('',font=self.FONT,size=self.SIZE)],
             # sg.Input()是输入框
