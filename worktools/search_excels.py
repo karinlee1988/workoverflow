@@ -30,7 +30,7 @@ class ExcelsSearcher(object):
         # 界面布局
         self.layout = [
             # sg.Image()插入图片，支持gif和png
-            [sg.Image(filename="images/qz.png", pad=(130, 0))],
+            [sg.Image(filename="images/george.png", pad=(130, 0))],
             # sg.Text()显示文本
             [sg.Text('', font=self.FONT, size=self.SIZE)],
             # sg.Input()是输入框
@@ -59,7 +59,7 @@ class ExcelsSearcher(object):
                 element = value['_ELEMENT_']
                 # 生成目录树
                 search = ElementSearch(source_path=folder,element=element)
-                search.search_element_plus()
+                search.search_element()
                 # 函数完成后返回处理完成标志到窗口界面上
                 self.window.Element("_RESULT_").Update("处理完成！")
             # 如果事件的值为 None，表示点击了右上角的关闭按钮，则会退出窗口循环
