@@ -156,7 +156,7 @@ def split_workbook_by_column(workbook_path:str,
         # 拼接dataframe，表头部分与数据部分
         each_workbook_df = workbook_header_df.append(each_workbook_source_df)
         # 将得到的dataframe保存成Excel格式，文件名为列字段。
-        each_workbook_df.to_excel(x + '.xlsx', index=False,header=False)
+        each_workbook_df.to_excel(str(x) + '.xlsx', index=False,header=False)
 
 def merge_workbook(filespath:str,sheet_index:int,title_index:int,savename:str) -> None:
     """

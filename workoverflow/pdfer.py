@@ -74,20 +74,14 @@ def combine_pic_to_pdf(pdf_filename:str,png_files:list) -> None :
 	# 另存为pdf
 	output.save(pdf_filename, "pdf", resolution=100.0, save_all=True, append_images=sources)
 
-
-def merge_pdfs(pdf_file_paths:iter, output:str) -> None:
+def merge_pdfs(pdf_file_paths:iter) -> None:
 	"""
 
-	Parameters
-	----------
-	pdf_file_paths: 要合并的pdf文件全文件名（多个）
-	output:另存为的合并pdf全文件名
+	:param pdf_file_paths: pdf文件列表
+	:type pdf_file_paths: iter
 
-
-	-------
-
+	:return: None
 	"""
-
 	# 创建一个空白的PdfFileWriter对象
 	pdf_writer = PdfFileWriter()
 	# 对路径下所有pdf文件进行遍历
@@ -99,14 +93,13 @@ def merge_pdfs(pdf_file_paths:iter, output:str) -> None:
 			# 将每页添加到writer对象
 			pdf_writer.addPage(pdf_reader.getPage(page))
 	# 写入合并的pdf
-	with open(output, 'wb') as out:
+	with open('mergedx.pdf', 'wb') as out:
 		pdf_writer.write(out)
-
 
 if __name__ == '__main__':
 	path = get_singlefolder_fullfilename(r"D:\MyNutstore\PersonalStudy\Python\WorkOverflow\tests\images",[".pdf"])
 	path.sort()
-	merge_pdfs(path, output='mergedx.pdf')
+	merge_pdfs(path)
 
 
 
