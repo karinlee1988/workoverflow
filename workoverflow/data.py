@@ -156,10 +156,10 @@ class RegExp(object):
 
 if __name__ == '__main__':
     # test
-    iaa = IdCardNumber("啦啦啦")
+
     # print(iaa.fifteen_to_eighteen())
     r = RegExp(u"阿大撒大撒大苏打ada441881198808150214.。。，asdsad阿达阿三",r'\d{17}[\d|x|X]|\d{15}')
     r2 = r.search()
     sfz =IdCardNumber(r2)
-    print(iaa.eighteen_to_fifteen())
-    print(iaa.get_birth())
+    print(sfz.eighteen_to_fifteen())
+    print(sfz.get_birth())
