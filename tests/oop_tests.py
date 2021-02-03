@@ -14,9 +14,13 @@ class Base(object):
     def __init__(self,a,b):
         self.a = a
         self.b = b
+        self.c = 10
 
     def sum(self):
         print(self.a + self.b)
+
+    def retur(self):
+        return self.b
 
 
 class New(Base):
@@ -27,12 +31,18 @@ class New(Base):
 
     @property
     def muti(self):
-        print(self.b * self.c)
+        return self.b * self.c
 
 
 
 
+class Over(Base):
 
-i = New(2,3,4)
-i.muti
-i.sum()
+    def __init__(self,*args):
+        super(Over, self).__init__(*args)
+        self.b = 33
+
+
+over = Over(1,2)
+print(over.retur())
+

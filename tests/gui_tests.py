@@ -48,7 +48,8 @@ def simple():
     layout = [
         [sg.Text('账号',font=("Helvetica", 25)), sg.Input(key='_USER_',font=("Helvetica", 25))],
         [sg.Text('密码'), sg.Input(password_char='*', key='_PWD_')],
-        [sg.Btn('提交', key='_LOGIN_')]
+        [sg.Btn('提交', key='_LOGIN_')],
+        [sg.Output(size=(72, 6), font=("微软雅黑", 10), background_color='light gray')]
     ]
 
 
@@ -74,4 +75,4 @@ def simple():
     window.close()
 
 if __name__ == '__main__':
-    cookbook()
+    simple()
