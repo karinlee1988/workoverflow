@@ -30,6 +30,8 @@ class CalculationOfMonths(object):
         self.SIZE = (10,1)
         # 界面布局
         self.layout = [
+            [sg.Text('  社保参保月数计算器by英德关系李加林',font=("微软雅黑", 12))],
+            [sg.Text('----------------------------------', font=self.FONT)],
             # sg.Image()插入图片，支持gif和png
             [sg.Image(filename="images/peppa.png")],
             # sg.Text()显示文本
@@ -43,7 +45,7 @@ class CalculationOfMonths(object):
         ]
         # 创建窗口，引入布局，并进行初始化
         # 创建时，必须要有一个名称，这个名称会显示在窗口上
-        self.window = sg.Window('社保参保月数计算器by李加林', layout=self.layout, finalize=True)
+        self.window = sg.Window('社保参保月数计算器', layout=self.layout, finalize=True)
 
     # 通过起始年月和结束年月计算参保月数
     @staticmethod
