@@ -76,6 +76,7 @@ def combine_pic_to_pdf(pdf_filename:str,png_files:list) -> None :
 
 def merge_pdfs(pdf_file_paths:iter) -> None:
 	"""
+	将多个pdf文件进行合并
 
 	:param pdf_file_paths: pdf文件列表
 	:type pdf_file_paths: iter
