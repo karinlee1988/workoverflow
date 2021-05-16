@@ -17,10 +17,10 @@ from docx import Document
 
 def replace_text(doc:[Document],old_text:str, new_text:str) -> None:
     """
-    将某个文档的某个词进行替换
+    将某个文档的某个词进行替换（可以制作模板后用于套打）
 
     :param doc:   要处理的文件
-    :type doc: Document
+    :type doc: class Document
 
     :param old_text:  旧的词
     :type old_text: str
