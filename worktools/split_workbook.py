@@ -34,14 +34,14 @@ class WorkbookSplit(object):
             # sg.Text()显示文本
             [sg.Text('',font=self.FONT,size=self.SIZE)],
             # sg.Input()是输入框
-            [sg.Text('请选择要拆分的文件：',font=self.FONT, size=(30,1))],
+            [sg.Text('选择要拆分的文件：',font=self.FONT, size=(30,1))],
             [sg.Input('     *.xlsx文件 ',key="_FILE_",readonly=True,size=(36,1),font=self.FONT),
                 sg.FileBrowse(button_text='选择文件',size=(10,1),font=self.FONT)],
-            [sg.Text(' 请输入sheet页序号（从1开始）：',font=self.FONT,size=self.SIZE),
+            [sg.Text('sheet页序号（从1开始）：',font=self.FONT,size=self.SIZE),
                 sg.Input(key='_SHEET_',font=self.FONT,size=(10,1))],
-            [sg.Text(' 请输入表头行数（从1开始）:  ', font=self.FONT, size=self.SIZE),
+            [sg.Text('表头行数（从1开始）:  ', font=self.FONT, size=self.SIZE),
              sg.Input(key='_TITLE_', font=self.FONT, size=(10,1))],
-            [sg.Text(' 请输入列号（从1开始）:  ', font=self.FONT, size=self.SIZE),
+            [sg.Text('列号（从1开始）:  ', font=self.FONT, size=self.SIZE),
              sg.Input(key='_COLUMN_', font=self.FONT, size=(10,1))],
             [sg.Text('')],
             [sg.Btn('开始拆分', key='_SUMMIT_', font=("微软雅黑", 16), size=(20, 1)),
